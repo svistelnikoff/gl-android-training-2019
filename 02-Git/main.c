@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <limits.h>
 #include <errno.h>
+#include <time.h>
 #include <readline/readline.h>
 
 static const int max_number = 10;
@@ -9,12 +10,15 @@ static const int min_number = 1;
 
 void promt( char** out_result );
 int parser( char* user_input );
+void checker( const int number );
 
 int main(int argc, char *argv[] ) {
     char* result;
+    int number;
 
     promt( &result );
-    parser( result );
+    number = parser( result );
+    checker( number );
     return EXIT_SUCCESS;
 }
 
@@ -45,7 +49,23 @@ int parser( char* user_input ) {
         printf( "Invalid input: out of range\n" );
         exit( EXIT_FAILURE);
     }
-    printf("Nice try: %s\n", user_input);
-    return 0;
+    printf( "Nice try from you: %d\n", user_number );
+    return user_number;
+}
+
+void checker( const int number ) {
+    int random_number;
+
+    srand( time( NULL ) );
+    do {
+        random_number = rand() % ( max_number + 1 );
+    } while( random_number < min_number || random_number > max_number );
+    printf( "Random is: %d\n", random_number );
+    if( number == random_number ) {
+        printf( "Congratulations ! ! ! You've guessed it ! ! !\n" );
+    }
+    else {
+        printf( "Ahhh... You've missed - try nex time !\n" );
+    }
 }
 
