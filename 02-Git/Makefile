@@ -1,7 +1,7 @@
 OBJ_DIR=out
 
 CC=gcc
-CFLAGS=-I.
+CFLAGS=-I. -I/usr/local/include -Wall -Werror
 DEPS =
 
 CSRC = ${wildcard *.c}
@@ -11,7 +11,7 @@ ${OBJ_DIR}/%.o: %.c ${DEPS}
 	${CC} -c $< ${CFLAGS} -o $@
 
 all: folders ${OBJECTS}
-	${CC} ${OBJECTS} -o ${OBJ_DIR}/guess
+	${CC} ${OBJECTS} -L/usr/local/lib -lreadline -o ${OBJ_DIR}/guess
 
 folders:
 	mkdir -p ${OBJ_DIR}
