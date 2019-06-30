@@ -1,3 +1,7 @@
 GetSetService/app/build/
 GetSetService/.idea/
 GetSetService/.gradle/
+
+SetterApp/app/build/
+SetterApp/.idea/
+SetterApp/.gradle/
