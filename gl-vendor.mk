@@ -1,0 +1,4 @@
+
+PRODUCT_PACKAGES += GetSetService
+PRODUCT_PACKAGES += GetterApp
+PRODUCT_PACKAGES += SetterApp
