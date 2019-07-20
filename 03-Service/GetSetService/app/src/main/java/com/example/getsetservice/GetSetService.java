@@ -37,12 +37,12 @@ public class GetSetService extends Service {
                     if (intent.hasExtra("value")) {
                         int newValue = intent.getIntExtra("value", Integer.MIN_VALUE);
                         if (newValue != Integer.MIN_VALUE) {
-                            Log("setValue( %d )", newValue);
+                            Log(String.format("setValue( %d )", newValue));
                             mServiceImpl.setValue(newValue);
                             sendActionResult("com.example.getsetservice.SET_VALUE_RESULT");
                         }
                     } else {
-                        Log("Nothing to do - missing \"value\" for %s", intent.getAction());
+                        Log(String.format("Nothing to do - missing \"value\" for %s", intent.getAction()));
                     }
                     break;
                 case "com.example.getsetservice.GET_VALUE":
@@ -50,11 +50,11 @@ public class GetSetService extends Service {
                     sendActionResult("com.example.getsetservice.GET_VALUE_RESULT");
                     break;
                 default:
-                    Log("%s unsupported method call: %s", LOG_TAG, intent.getAction());
+                    Log(String.format("%s unsupported method call: %s", LOG_TAG, intent.getAction()));
                     break;
             }
         } catch (Exception ex) {
-            Log("%s exception occured: %s", LOG_TAG, ex.toString());
+            Log(String.format("%s exception occured: %s", LOG_TAG, ex.toString()));
         }
         return START_STICKY;
     }
@@ -89,7 +89,7 @@ public class GetSetService extends Service {
         startForeground(9670, notification);
     }
 
-    private void Log(@NonNull String format, @NonNull Object... objects) {
-        Log.d(LOG_TAG, "-> " + String.format(format, objects));
+    private void Log(@NonNull String message) {
+        Log.d(LOG_TAG, String.format(" -> %s", message));
     }
 }

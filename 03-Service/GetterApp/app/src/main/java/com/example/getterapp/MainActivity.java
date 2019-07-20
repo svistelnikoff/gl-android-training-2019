@@ -15,17 +15,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     private static String LOG_TAG = "GetterApp";
-    private com.example.getterapp.IGetSetServicelInterface mService;
     private BroadcastReceiver mBroadReceiver = null;
 
     private void Log(@NonNull String format, @NonNull Object... objects) {
-        Log.d(LOG_TAG, "-> %s" + String.format(format, objects));
+        Log.d(LOG_TAG, "-> " + String.format(format, objects));
+    }
+    private void Log(@NonNull String message) {
+        Log.d(LOG_TAG, String.format(" -> %s", message));
     }
 
     @Override
     protected void onPostResume() {
-        Log("onPostResume()");
         super.onPostResume();
+        Log("onPostResume()");
 
         IntentFilter filter = new IntentFilter("com.example.getsetservice.GET_VALUE_RESULT");
         mBroadReceiver = new BroadcastReceiver() {
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             public void onReceive(Context context, Intent intent) {
                 if (intent.hasExtra("value")) {
                     int value = intent.getIntExtra("value", 0);
-                    Log("GetValue() method done: %d", value);
+                    Log(String.format( "GetValue() method done: %d", value));
                 }
 
             }
@@ -52,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log("onCreate()");
         super.onCreate(savedInstanceState);
+        Log("onCreate()");
         setContentView(R.layout.activity_main);
 
         Button getValueBtn = findViewById(R.id.getValueBtn);
