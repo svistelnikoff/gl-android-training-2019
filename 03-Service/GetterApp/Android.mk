@@ -4,21 +4,30 @@ include $(CLEAR_VARS)
 
 LOCAL_USE_AAPT2 := true
 
+LOCAL_CERTIFICATE := platform
+LOCAL_PROGUARD_ENABLED := disabled
 LOCAL_MODULE_TAGS := optional
+LOCAL_PRIVATE_PLATFORM_APIS := true
+# LOCAL_SDK_VERSION := current
+
+LOCAL_PACKAGE_NAME := GetterApp
 
 LOCAL_SRC_FILES := $(call all-java-files-under, app/src/main/java)
-LOCAL_SRC_FILES := $(call all-java-files-under, app/src/main/aidl)
+LOCAL_SRC_FILES += $(call all-Iaidl-files-under, app/src/main/aidl)
 
 LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/app/src/main/res
 
 LOCAL_MANIFEST_FILE := app/src/main/AndroidManifest.xml
 
 LOCAL_STATIC_ANDROID_LIBRARIES := \
-	androidx.appcompat_appcompat \
-	androidx-constraintlayout_constraintlayout
-	
-LOCAL_PACKAGE_NAME := GetterApp
+    android-support-v7-appcompat \
+    android-support-constraint-layout
+#    android-support-constraint-layout \
+#    android-support-v4 \
+#    android-support-annotations
 
-LOCAL_SDK_VERSION := 28
+LOCAL_STATIC_JAVA_LIBRARIES += \
+    android-support-constraint-layout-solver
+
 
 include $(BUILD_PACKAGE)

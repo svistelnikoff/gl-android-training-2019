@@ -2,7 +2,7 @@ package com.example.getsetservice;
 
 import android.util.Log;
 
-public class GetSetServiceImpl extends com.example.getsetservice.IGetSetServicelInterface.Stub {
+public class GetSetServiceImpl extends com.example.getsetservice.IGetSetServiceInterface.Stub {
     private static String LOG_TAG = "GetSetServiceImpl";
     private int m_value = 0;
 

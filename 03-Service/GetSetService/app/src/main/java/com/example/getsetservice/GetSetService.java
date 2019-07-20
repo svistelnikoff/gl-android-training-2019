@@ -8,14 +8,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.IBinder;
+import android.os.RemoteException;
+import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
+import vendor.gl.ledcontrol.V1_0.ILedControl;
+import vendor.gl.ledcontrol.V1_0.LedState;
 
 public class GetSetService extends Service {
-    private static String LOG_TAG = "GetSetService";
+    private static String LOG_TAG = "vvsGetSetService";
     private GetSetServiceImpl mServiceImpl = null;
+    private ILedControl ledControl = null;
 
     public GetSetService() {
         Log("GetSetService()");
@@ -26,35 +30,48 @@ public class GetSetService extends Service {
         Log("onCreate()");
         mServiceImpl = new GetSetServiceImpl();
         notifyForeground();
+        try {
+            ledControl = ILedControl.getService(true);
+            //if( false ) { throw ( new RemoteException()); }
+        } catch (RemoteException ex) {
+            Log(ex.toString());
+        }
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log("onStartCommand()");
         try {
-            switch (intent.getAction()) {
+            final String actionName = intent.getAction();
+            Log("onStartCommand() action: ".concat(actionName));
+            switch (actionName) {
                 case "com.example.getsetservice.SET_VALUE":
                     if (intent.hasExtra("value")) {
                         int newValue = intent.getIntExtra("value", Integer.MIN_VALUE);
                         if (newValue != Integer.MIN_VALUE) {
-                            Log("setValue( %d )", newValue);
+                            Log(String.format("setValue( %d )", newValue));
                             mServiceImpl.setValue(newValue);
                             sendActionResult("com.example.getsetservice.SET_VALUE_RESULT");
                         }
                     } else {
-                        Log("Nothing to do - missing \"value\" for %s", intent.getAction());
+                        Log(String.format("Nothing to do - missing \"value\" for %s", intent.getAction()));
                     }
                     break;
                 case "com.example.getsetservice.GET_VALUE":
                     Log("getValue()");
                     sendActionResult("com.example.getsetservice.GET_VALUE_RESULT");
                     break;
+                case "com.example.getsetservice.SET_LED":
+                    processLedAction(intent, LedState.LED_STATE_ON);
+                    break;
+                case "com.example.getsetservice.CLEAR_LED":
+                    processLedAction(intent, LedState.LED_STATE_OFF);
+                    break;
                 default:
-                    Log("%s unsupported method call: %s", LOG_TAG, intent.getAction());
+                    Log(String.format("%s unsupported method call: %s", LOG_TAG, intent.getAction()));
                     break;
             }
         } catch (Exception ex) {
-            Log("%s exception occured: %s", LOG_TAG, ex.toString());
+            Log(String.format("%s exception occured: %s", LOG_TAG, ex.toString()));
         }
         return START_STICKY;
     }
@@ -76,6 +93,23 @@ public class GetSetService extends Service {
         sendBroadcast(resultIntent);
     }
 
+    private void processLedAction(Intent intent, byte state) {
+        if (intent.hasExtra("led")) {
+            int ledNumber = intent.getIntExtra("led", Integer.MIN_VALUE);
+            if (ledNumber != Integer.MIN_VALUE) {
+                try {
+                    Log(String.format("Set led %d to %d", ledNumber, state));
+                    ledControl.setLedState((byte) ledNumber, state);
+                } catch (Exception ex) {
+                    Log("Failed to set led.Exception: ".concat(ex.toString()));
+                }
+            }
+        } else {
+            Log(String.format("Nothing to do - missing \"value\" for %s", intent.getAction()));
+        }
+
+    }
+
     private void notifyForeground() {
         final String channelId = "getsetservice";
         NotificationChannel channel = new NotificationChannel(channelId, "Get/Set service", NotificationManager.IMPORTANCE_NONE);
@@ -89,7 +123,7 @@ public class GetSetService extends Service {
         startForeground(9670, notification);
     }
 
-    private void Log(@NonNull String format, @NonNull Object... objects) {
-        Log.d(LOG_TAG, "-> " + String.format(format, objects));
+    private void Log(@NonNull String message) {
+        Log.d(LOG_TAG, String.format(" -> %s", message));
     }
 }
