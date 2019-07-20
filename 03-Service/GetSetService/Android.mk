@@ -7,7 +7,7 @@ LOCAL_USE_AAPT2 := true
 LOCAL_MODULE_TAGS := optional
 
 LOCAL_SRC_FILES := $(call all-java-files-under, app/src/main/java)
-LOCAL_SRC_FILES := $(call all-java-files-under, app/src/main/aidl)
+LOCAL_SRC_FILES += $(call all-Iaidl-files-under, app/src/main/aidl)
 
 LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/app/src/main/res
 
