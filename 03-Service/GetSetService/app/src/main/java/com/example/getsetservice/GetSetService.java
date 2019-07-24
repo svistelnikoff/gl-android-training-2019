@@ -8,14 +8,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import vendor.gl.ledcontrol.V1_0.ILedControl;
+import vendor.gl.ledcontrol.V1_0.Leds;
+import vendor.gl.ledcontrol.V1_0.LedState;
+
 public class GetSetService extends Service {
     private static String LOG_TAG = "GetSetService";
     private GetSetServiceImpl mServiceImpl = null;
+    private ILedControl ledControl = null;
 
     public GetSetService() {
         Log("GetSetService()");
@@ -26,13 +32,20 @@ public class GetSetService extends Service {
         Log("onCreate()");
         mServiceImpl = new GetSetServiceImpl();
         notifyForeground();
+        try {
+            ledControl = ILedControl.getService(true);
+        }
+        catch(RemoteException ex) {
+            Log(ex.toString());
+        }
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log("onStartCommand()");
         try {
-            switch (intent.getAction()) {
+            final String actionName = intent.getAction();
+            Log("onStartCommand() action: ".concat(actionName));
+            switch (actionName) {
                 case "com.example.getsetservice.SET_VALUE":
                     if (intent.hasExtra("value")) {
                         int newValue = intent.getIntExtra("value", Integer.MIN_VALUE);
@@ -48,6 +61,12 @@ public class GetSetService extends Service {
                 case "com.example.getsetservice.GET_VALUE":
                     Log("getValue()");
                     sendActionResult("com.example.getsetservice.GET_VALUE_RESULT");
+                    break;
+                case "com.example.getsetservice.SET_LED":
+                    processLedAction(intent, LedState.LED_STATE_ON);
+                    break;
+                case "com.example.getsetservice.CLEAR_LED":
+                    processLedAction(intent, LedState.LED_STATE_OFF);
                     break;
                 default:
                     Log(String.format("%s unsupported method call: %s", LOG_TAG, intent.getAction()));
@@ -74,6 +93,25 @@ public class GetSetService extends Service {
         Intent resultIntent = new Intent(actionName);
         resultIntent.putExtra("value", mServiceImpl.getValue());
         sendBroadcast(resultIntent);
+    }
+
+    private void processLedAction(Intent intent, LedState state) {
+        if (intent.hasExtra("led")) {
+            int ledNumber = intent.getIntExtra("led", Integer.MIN_VALUE);
+            if (ledNumber != Integer.MIN_VALUE) {
+                try {
+                    byte ledState = Byte.parseByte(state.toString());
+                    Log(String.format("Sel led %d to %d)", ledNumber, ledState));
+                    ledControl.setLedState((byte)ledNumber, ledState );
+                }
+                catch( Exception ex) {
+                    Log("Failed to set led.Exception: ".concat(ex.toString()));
+                }
+            }
+        } else {
+            Log(String.format("Nothing to do - missing \"value\" for %s", intent.getAction()));
+        }
+
     }
 
     private void notifyForeground() {
