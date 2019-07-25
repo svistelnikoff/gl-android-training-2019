@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 //import androidx.annotation.NonNull;
@@ -99,14 +100,13 @@ public class GetSetService extends Service {
         sendBroadcast(resultIntent);
     }
 
-    private void processLedAction(Intent intent, LedState state) {
+    private void processLedAction(Intent intent, byte state) {
         if (intent.hasExtra("led")) {
             int ledNumber = intent.getIntExtra("led", Integer.MIN_VALUE);
             if (ledNumber != Integer.MIN_VALUE) {
                 try {
-                    byte ledState = Byte.parseByte(state.toString());
-                    Log(String.format("Sel led %d to %d)", ledNumber, ledState));
-                    ledControl.setLedState((byte)ledNumber, ledState );
+                    Log(String.format("Sel led %d to %d)", ledNumber, state));
+                    ledControl.setLedState((byte)ledNumber, state );
                 }
                 catch( Exception ex) {
                     Log("Failed to set led.Exception: ".concat(ex.toString()));
