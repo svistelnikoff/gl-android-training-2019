@@ -11,8 +11,12 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
+//import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
+//import androidx.appcompat.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity;
+
+import java.util.Random;
 
 import vendor.gl.ledcontrol.V1_0.ILedControl;
 import vendor.gl.ledcontrol.V1_0.Leds;
