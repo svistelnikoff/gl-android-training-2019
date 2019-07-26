@@ -1,9 +1,9 @@
-// IGetSetServicelInterface.aidl
-package com.example.getsetservice;
+// IGetSetServiceInterface.aidl
+package com.example.setterapp;
 
 // Declare any non-default types here with import statements
 
-interface IGetSetServicelInterface {
+interface IGetSetServiceInterface {
     /**
      * Demonstrates some basic types that you can use as parameters
      * and return values in AIDL.
