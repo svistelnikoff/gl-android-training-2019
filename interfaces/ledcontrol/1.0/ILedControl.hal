@@ -1,0 +1,34 @@
+/*
+ * (License Notice)
+ */
+
+package vendor.gl.ledcontrol@1.0;
+
+/**
+ * ILedControl interface description 
+ */
+interface ILedControl {
+
+    /**
+     * ILedControl initialization function.
+     *
+     * @return result 0 if successful, nonzero otherwise.
+     */
+     initialize() generates (int32_t result);
+
+    /**
+     * ILedControl SetLedState function.
+     *
+     * @return result 0 if successful, nonzero otherwise.
+     */
+     setLedState(Leds led, LedState state) generates (int32_t result);
+
+     /**
+     * ILedControl terminate function.
+     *
+     * @return result 0 if successful, nonzero otherwise.
+     */
+     terminate() generates (int32_t result);
+
+
+};

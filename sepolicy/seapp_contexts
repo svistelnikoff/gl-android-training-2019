@@ -1,0 +1,5 @@
+#
+# Copyright
+#
+
+user=_app domain=ledcontrol_app seinfo=platform name=com.example.getsetservice type=ledcontrol_app_data

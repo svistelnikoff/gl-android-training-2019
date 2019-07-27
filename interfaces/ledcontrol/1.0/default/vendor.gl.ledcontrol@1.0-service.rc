@@ -1,0 +1,23 @@
+# some init.rc script associated with the HAL
+service vendor.gl.ledcontrol@1.0-service /system/vendor/bin/hw/vendor.gl.ledcontrol@1.0-service
+    interface vendor.gl.ledcontrol@1.0::ILedControl default
+    class hal
+    user vendor_ledcontrol
+    group vendor_ledcontrol
+
+    # will not be restarted if it exits until it is requested to be restarted
+    # oneshot
+
+    # will only be started when requested
+    disabled
+
+    # ... other properties
+on early-boot
+    chown vendor_ledcontrol vendor_ledcontrol /sys/class/leds/user_led1/brightness
+    chown vendor_ledcontrol vendor_ledcontrol /sys/class/leds/user_led1/trigger
+    chown vendor_ledcontrol vendor_ledcontrol /sys/class/leds/user_led2/brightness
+    chown vendor_ledcontrol vendor_ledcontrol /sys/class/leds/user_led2/trigger
+    chown vendor_ledcontrol vendor_ledcontrol /sys/class/leds/user_led3/brightness
+    chown vendor_ledcontrol vendor_ledcontrol /sys/class/leds/user_led3/trigger
+    chown vendor_ledcontrol vendor_ledcontrol /sys/class/leds/user_led4/brightness
+    chown vendor_ledcontrol vendor_ledcontrol /sys/class/leds/user_led4/trigger
