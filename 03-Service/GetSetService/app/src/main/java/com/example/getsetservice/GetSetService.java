@@ -17,14 +17,14 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.util.Random;
 
-//import vendor.gl.ledcontrol.V1_0.ILedControl;
-//import vendor.gl.ledcontrol.V1_0.Leds;
-//import vendor.gl.ledcontrol.V1_0.LedState;
+import vendor.gl.ledcontrol.V1_0.ILedControl;
+import vendor.gl.ledcontrol.V1_0.Leds;
+import vendor.gl.ledcontrol.V1_0.LedState;
 
 public class GetSetService extends Service {
     private static String LOG_TAG = "vvsGetSetService";
     private GetSetServiceImpl mServiceImpl = null;
-//    private ILedControl ledControl = null;
+    private ILedControl ledControl = null;
 
     public GetSetService() {
         Log("GetSetService()");
@@ -36,10 +36,8 @@ public class GetSetService extends Service {
         mServiceImpl = new GetSetServiceImpl();
         notifyForeground();
         try {
-            //ledControl = ILedControl.getService(true);
-            if( false ) {
-                throw ( new RemoteException());
-            }
+            ledControl = ILedControl.getService(true);
+            //if( false ) { throw ( new RemoteException()); }
         }
         catch(RemoteException ex) {
             Log(ex.toString());
@@ -106,8 +104,8 @@ public class GetSetService extends Service {
             int ledNumber = intent.getIntExtra("led", Integer.MIN_VALUE);
             if (ledNumber != Integer.MIN_VALUE) {
                 try {
-                    Log(String.format("Sel led %d to %d)", ledNumber, state));
-                    //ledControl.setLedState((byte)ledNumber, state );
+                    Log(String.format("Set led %d to %d", ledNumber, state));
+                    ledControl.setLedState((byte)ledNumber, state );
                 }
                 catch( Exception ex) {
                     Log("Failed to set led.Exception: ".concat(ex.toString()));
