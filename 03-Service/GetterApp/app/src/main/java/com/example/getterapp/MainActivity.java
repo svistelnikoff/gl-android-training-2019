@@ -10,13 +10,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-//import androidx.annotation.NonNull;
 import android.support.annotation.NonNull;
-//import androidx.appcompat.app.AppCompatActivity;
 import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    private static String LOG_TAG = "GetterApp";
+    private static String LOG_TAG = "vvsGetterApp";
     private BroadcastReceiver mBroadReceiver = null;
 
     private void Log(@NonNull String format, @NonNull Object... objects) {

@@ -12,17 +12,15 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
-//import androidx.annotation.NonNull;
 import android.support.annotation.NonNull;
-//import androidx.appcompat.app.AppCompatActivity;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.Random;
 
-import vendor.gl.ledcontrol.V1_0.Leds;
+//import vendor.gl.ledcontrol.V1_0.Leds;
 
 public class MainActivity extends AppCompatActivity {
-    private static String LOG_TAG = "SetterApp";
+    private static String LOG_TAG = "vvsSetterApp";
     private BroadcastReceiver mBroadReceiver = null;
     Switch mSwitchLed1 = null;
     Switch mSwitchLed2 = null;
@@ -87,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Log(String.format("LED1 -> %s", isChecked ? "enabled" : "disabled"));
                     final String ledAction = isChecked ? "SET_LED" : "CLEAR_LED";
-                    sendServiceActionWithExtraInt(ledAction, "led", Leds.LED_1);
+                    sendServiceActionWithExtraInt(ledAction, "led", /*Leds.LED_*/1);
                 }
                 catch(Exception ex) {   // formely catch (RemoteException ex)
                     Log(ex.toString());
@@ -100,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Log(String.format("LED2 -> %s", isChecked ? "enabled" : "disabled"));
                     final String ledAction = isChecked ? "SET_LED" : "CLEAR_LED";
-                    sendServiceActionWithExtraInt(ledAction, "led", Leds.LED_2);
+                    sendServiceActionWithExtraInt(ledAction, "led", /*Leds.LED_*/2);
                 }
                 catch(Exception ex) {   // formely catch (RemoteException ex)
                     Log(ex.toString());
@@ -113,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Log(String.format("LED3 -> %s", isChecked ? "enabled" : "disabled"));
                     final String ledAction = isChecked ? "SET_LED" : "CLEAR_LED";
-                    sendServiceActionWithExtraInt(ledAction, "led", Leds.LED_3);
+                    sendServiceActionWithExtraInt(ledAction, "led", /*Leds.LED_*/3);
                 }
                 catch(Exception ex) {   // formely catch (RemoteException ex)
                     Log(ex.toString());
@@ -126,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Log(String.format("LED4 -> %s", isChecked ? "enabled" : "disabled"));
                     final String ledAction = isChecked ? "SET_LED" : "CLEAR_LED";
-                    sendServiceActionWithExtraInt(ledAction, "led", Leds.LED_4);
+                    sendServiceActionWithExtraInt(ledAction, "led", /*Leds.LED_*/4);
                 }
                 catch(Exception ex) {   // formely catch (RemoteException ex)
                     Log(ex.toString());
