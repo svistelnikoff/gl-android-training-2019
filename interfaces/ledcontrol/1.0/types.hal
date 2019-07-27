@@ -1,0 +1,17 @@
+/*
+ * (License Notice)
+ */
+
+package vendor.gl.ledcontrol@1.0;
+
+enum LedState : uint8_t {
+    LED_STATE_OFF = 0,
+    LED_STATE_ON,
+};
+
+enum Leds : uint8_t {
+    LED_1 = 1,
+    LED_2,
+    LED_3,
+    LED_4,
+};
