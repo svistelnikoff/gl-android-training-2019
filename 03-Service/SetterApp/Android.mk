@@ -19,10 +19,6 @@ LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/app/src/main/res
 
 LOCAL_MANIFEST_FILE := app/src/main/AndroidManifest.xml
 
-#LOCAL_STATIC_ANDROID_LIBRARIES := \
-#	androidx.appcompat_appcompat \
-#	androidx-constraintlayout_constraintlayout
-
 LOCAL_STATIC_ANDROID_LIBRARIES := \
     android-support-v7-appcompat \
     android-support-constraint-layout

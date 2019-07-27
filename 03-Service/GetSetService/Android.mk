@@ -19,7 +19,7 @@ LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/app/src/main/res
 
 LOCAL_MANIFEST_FILE := app/src/main/AndroidManifest.xml
 
-LOCAL_STATIC_ANDROID_LIBRARIES := \
+LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-v7-appcompat
 
 LOCAL_STATIC_JAVA_LIBRARIES += \
