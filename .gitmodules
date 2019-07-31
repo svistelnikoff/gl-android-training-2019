@@ -1,0 +1,4 @@
+[submodule "apps/gl-android-training"]
+	path = apps/gl-android-training
+	url = git@github.com-svistelnikoff:svistelnikoff/gl-android-training-2019.git
+	branch = svistelnikoff@work-03
